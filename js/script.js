@@ -64,17 +64,23 @@ setInterval(createSnowflake, 450);
 
 // Enhanced Confetti System
 const canvas = document.getElementById('confetti-canvas');
-const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true, willReadFrequently: false });
 
 // Safari performance optimizations
-ctx.imageSmoothingEnabled = true;
-ctx.imageSmoothingQuality = 'high';
+ctx.imageSmoothingEnabled = false; // Disable for better performance
+ctx.imageSmoothingQuality = 'low';
+
+// Detect Safari for additional optimizations
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
+    // For Safari, use 1:1 pixel ratio for better performance
+    const dpr = isSafari ? 1 : (window.devicePixelRatio || 1);
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
+    if (dpr !== 1) {
+        ctx.scale(dpr, dpr);
+    }
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
 }
@@ -116,34 +122,62 @@ class ConfettiParticle {
         const alpha = Math.max(0, this.life);
         if (alpha <= 0) return; // Skip invisible particles
         
-        const rotation = (this.rotation * Math.PI) / 180;
-        const cos = Math.cos(rotation);
-        const sin = Math.sin(rotation);
+        // For Safari, skip rotation for squares to improve performance
+        const useRotation = !isSafari || this.type !== 'square';
+        const rotation = useRotation ? (this.rotation * Math.PI) / 180 : 0;
         
         ctx.save();
         ctx.globalAlpha = alpha;
         ctx.fillStyle = this.color;
-        ctx.translate(this.x, this.y);
-        ctx.rotate(rotation);
+        
+        if (useRotation) {
+            ctx.translate(this.x, this.y);
+            ctx.rotate(rotation);
+        }
         
         if (this.type === 'circle') {
-            // Optimized circle drawing
-            ctx.beginPath();
-            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-            ctx.fill();
+            // Optimized circle drawing - use fillRect for Safari if small
+            if (isSafari && this.size < 8) {
+                const size = this.size / 2;
+                if (useRotation) {
+                    ctx.fillRect(-size, -size, size * 2, size * 2);
+                } else {
+                    ctx.fillRect(this.x - size, this.y - size, size * 2, size * 2);
+                }
+            } else {
+                if (!useRotation) ctx.translate(this.x, this.y);
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
         } else if (this.type === 'star') {
-            // Simplified star - use diamond shape for better performance
-            const size = this.size / 2;
-            ctx.beginPath();
-            ctx.moveTo(0, -size);
-            ctx.lineTo(size * 0.4, 0);
-            ctx.lineTo(0, size);
-            ctx.lineTo(-size * 0.4, 0);
-            ctx.closePath();
-            ctx.fill();
+            // For Safari, use simple square instead of star
+            if (isSafari) {
+                const size = this.size / 2;
+                if (useRotation) {
+                    ctx.fillRect(-size, -size, this.size, this.size);
+                } else {
+                    ctx.fillRect(this.x - size, this.y - size, this.size, this.size);
+                }
+            } else {
+                // Simplified star - use diamond shape for better performance
+                const size = this.size / 2;
+                if (!useRotation) ctx.translate(this.x, this.y);
+                ctx.beginPath();
+                ctx.moveTo(0, -size);
+                ctx.lineTo(size * 0.4, 0);
+                ctx.lineTo(0, size);
+                ctx.lineTo(-size * 0.4, 0);
+                ctx.closePath();
+                ctx.fill();
+            }
         } else {
             // Square/rectangle - use pre-calculated height for consistency
-            ctx.fillRect(-this.size / 2, -this.height / 2, this.size, this.height);
+            if (useRotation) {
+                ctx.fillRect(-this.size / 2, -this.height / 2, this.size, this.height);
+            } else {
+                ctx.fillRect(this.x - this.size / 2, this.y - this.height / 2, this.size, this.height);
+            }
         }
         
         ctx.restore();
@@ -152,25 +186,34 @@ class ConfettiParticle {
 
 function createConfettiBurst(x, y, count = 350) {
     // Create a beautiful circular/spherical burst pattern
-    // Slightly reduced count for Safari performance while maintaining visual impact
+    // Adjust count for Safari performance
+    const particleCount = isSafari ? 280 : count;
     const dpr = window.devicePixelRatio || 1;
     const adjustedX = x;
     const adjustedY = y;
     
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < particleCount; i++) {
         // Create particles in a circular pattern with random distribution
         const angle = Math.random() * Math.PI * 2; // Random angle for natural distribution
         const radius = Math.random() * 35; // Slightly reduced radius for better performance
         const offsetX = Math.cos(angle) * radius;
         const offsetY = Math.sin(angle) * radius;
         
-        // Vary particle types - simplified for Safari performance
+        // For Safari, prefer simpler shapes (more squares, fewer stars)
         const rand = Math.random();
         let type = 'square';
-        if (rand > 0.8) {
-            type = 'circle';
-        } else if (rand > 0.6) {
-            type = 'star';
+        if (isSafari) {
+            // Safari: mostly squares, some circles, no stars
+            if (rand > 0.85) {
+                type = 'circle';
+            }
+        } else {
+            // Chrome: more variety
+            if (rand > 0.8) {
+                type = 'circle';
+            } else if (rand > 0.6) {
+                type = 'star';
+            }
         }
         
         const particle = new ConfettiParticle(adjustedX + offsetX, adjustedY + offsetY, type);
@@ -179,14 +222,30 @@ function createConfettiBurst(x, y, count = 350) {
         const angleVariation = angle + (Math.random() - 0.5) * 0.25; // Slight angle variation
         particle.vx = Math.cos(angleVariation) * velocity;
         particle.vy = Math.sin(angleVariation) * velocity - 2.5; // Upward bias for celebration
-        particle.rotationSpeed = (Math.random() - 0.5) * 35; // Rotation for dynamic effect
+        // Reduce rotation speed for Safari
+        particle.rotationSpeed = isSafari ? (Math.random() - 0.5) * 20 : (Math.random() - 0.5) * 35;
         confettiParticles.push(particle);
     }
 }
 
-function animateConfetti() {
+// Frame throttling for Safari
+let lastFrameTime = performance.now();
+const targetFPS = isSafari ? 50 : 60;
+const frameInterval = 1000 / targetFPS;
+
+function animateConfetti(currentTime) {
+    // Throttle frames for Safari
+    if (isSafari) {
+        const elapsed = currentTime - lastFrameTime;
+        if (elapsed < frameInterval) {
+            requestAnimationFrame(animateConfetti);
+            return;
+        }
+        lastFrameTime = currentTime;
+    }
+    
     // Optimize for Safari - use efficient clearing
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = isSafari ? 1 : (window.devicePixelRatio || 1);
     ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
     // Batch updates and draws for better performance
@@ -194,7 +253,10 @@ function animateConfetti() {
     const maxY = (canvas.height / dpr) + 100;
     const maxX = (canvas.width / dpr) + 100;
     
-    for (let i = confettiParticles.length - 1; i >= 0; i--) {
+    // For Safari, update fewer particles per frame if there are many
+    const updateStep = isSafari && confettiParticles.length > 200 ? 2 : 1;
+    
+    for (let i = confettiParticles.length - 1; i >= 0; i -= updateStep) {
         const particle = confettiParticles[i];
         particle.update();
         
@@ -206,7 +268,21 @@ function animateConfetti() {
         }
     }
     
+    // Update remaining particles if we skipped some
+    if (updateStep > 1) {
+        for (let i = confettiParticles.length - 2; i >= 0; i -= updateStep) {
+            const particle = confettiParticles[i];
+            particle.update();
+            if (particle.life <= 0 || particle.y > maxY || particle.x < -100 || particle.x > maxX) {
+                particlesToRemove.push(i);
+            } else {
+                particle.draw();
+            }
+        }
+    }
+    
     // Remove dead particles in batch
+    particlesToRemove.sort((a, b) => b - a); // Sort descending to avoid index issues
     for (let i = 0; i < particlesToRemove.length; i++) {
         confettiParticles.splice(particlesToRemove[i], 1);
     }
