@@ -64,11 +64,19 @@ setInterval(createSnowflake, 450);
 
 // Enhanced Confetti System
 const canvas = document.getElementById('confetti-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+
+// Safari performance optimizations
+ctx.imageSmoothingEnabled = true;
+ctx.imageSmoothingQuality = 'high';
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
 }
 resizeCanvas();
 
@@ -79,17 +87,19 @@ class ConfettiParticle {
         this.x = x;
         this.y = y;
         this.type = type;
+        // Default velocities (can be overridden for burst effects)
         this.vx = (Math.random() - 0.5) * 12;
         this.vy = (Math.random() - 0.5) * 12 - 8;
-        this.size = Math.random() * 10 + 5;
+        this.size = Math.random() * 8 + 4;
+        this.height = this.size * 0.9; // Pre-calculate for square particles (Safari optimization)
         this.color = ['#ff6b6b', '#ffd93d', '#4ecdc4', '#95e1d3', '#f38181', '#aa96da', '#ffffff'][
             Math.floor(Math.random() * 7)
         ];
         this.rotation = Math.random() * 360;
-        this.rotationSpeed = (Math.random() - 0.5) * 25;
-        this.gravity = 0.4;
+        this.rotationSpeed = (Math.random() - 0.5) * 30;
+        this.gravity = 0.35;
         this.life = 1;
-        this.decay = Math.random() * 0.02 + 0.015;
+        this.decay = Math.random() * 0.015 + 0.01;
     }
 
     update() {
@@ -102,42 +112,103 @@ class ConfettiParticle {
     }
 
     draw() {
+        // Optimize for Safari - batch operations and reduce save/restore
+        const alpha = Math.max(0, this.life);
+        if (alpha <= 0) return; // Skip invisible particles
+        
+        const rotation = (this.rotation * Math.PI) / 180;
+        const cos = Math.cos(rotation);
+        const sin = Math.sin(rotation);
+        
         ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.globalAlpha = alpha;
         ctx.fillStyle = this.color;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(rotation);
         
         if (this.type === 'circle') {
+            // Optimized circle drawing
             ctx.beginPath();
             ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
             ctx.fill();
+        } else if (this.type === 'star') {
+            // Simplified star - use diamond shape for better performance
+            const size = this.size / 2;
+            ctx.beginPath();
+            ctx.moveTo(0, -size);
+            ctx.lineTo(size * 0.4, 0);
+            ctx.lineTo(0, size);
+            ctx.lineTo(-size * 0.4, 0);
+            ctx.closePath();
+            ctx.fill();
         } else {
-            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            // Square/rectangle - use pre-calculated height for consistency
+            ctx.fillRect(-this.size / 2, -this.height / 2, this.size, this.height);
         }
         
         ctx.restore();
     }
 }
 
-function createConfettiBurst(x, y, count = 150) {
+function createConfettiBurst(x, y, count = 350) {
+    // Create a beautiful circular/spherical burst pattern
+    // Slightly reduced count for Safari performance while maintaining visual impact
+    const dpr = window.devicePixelRatio || 1;
+    const adjustedX = x;
+    const adjustedY = y;
+    
     for (let i = 0; i < count; i++) {
-        const type = Math.random() > 0.7 ? 'circle' : 'square';
-        confettiParticles.push(new ConfettiParticle(x, y, type));
+        // Create particles in a circular pattern with random distribution
+        const angle = Math.random() * Math.PI * 2; // Random angle for natural distribution
+        const radius = Math.random() * 35; // Slightly reduced radius for better performance
+        const offsetX = Math.cos(angle) * radius;
+        const offsetY = Math.sin(angle) * radius;
+        
+        // Vary particle types - simplified for Safari performance
+        const rand = Math.random();
+        let type = 'square';
+        if (rand > 0.8) {
+            type = 'circle';
+        } else if (rand > 0.6) {
+            type = 'star';
+        }
+        
+        const particle = new ConfettiParticle(adjustedX + offsetX, adjustedY + offsetY, type);
+        // Add initial velocity based on angle for circular burst effect
+        const velocity = 7 + Math.random() * 9;
+        const angleVariation = angle + (Math.random() - 0.5) * 0.25; // Slight angle variation
+        particle.vx = Math.cos(angleVariation) * velocity;
+        particle.vy = Math.sin(angleVariation) * velocity - 2.5; // Upward bias for celebration
+        particle.rotationSpeed = (Math.random() - 0.5) * 35; // Rotation for dynamic effect
+        confettiParticles.push(particle);
     }
 }
 
 function animateConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Optimize for Safari - use efficient clearing
+    const dpr = window.devicePixelRatio || 1;
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
+    // Batch updates and draws for better performance
+    let particlesToRemove = [];
+    const maxY = (canvas.height / dpr) + 100;
+    const maxX = (canvas.width / dpr) + 100;
+    
     for (let i = confettiParticles.length - 1; i >= 0; i--) {
         const particle = confettiParticles[i];
         particle.update();
-        particle.draw();
-
-        if (particle.life <= 0 || particle.y > canvas.height + 100 || particle.x < -100 || particle.x > canvas.width + 100) {
-            confettiParticles.splice(i, 1);
+        
+        // Check bounds before drawing (Safari optimization)
+        if (particle.life <= 0 || particle.y > maxY || particle.x < -100 || particle.x > maxX) {
+            particlesToRemove.push(i);
+        } else {
+            particle.draw();
         }
+    }
+    
+    // Remove dead particles in batch
+    for (let i = 0; i < particlesToRemove.length; i++) {
+        confettiParticles.splice(particlesToRemove[i], 1);
     }
 
     requestAnimationFrame(animateConfetti);
@@ -155,7 +226,6 @@ const challengeInput = document.getElementById('challengeInput');
 const submitChallenge = document.getElementById('submitChallenge');
 const challengeTextContainer = document.getElementById('challengeTextContainer');
 const challengeText = document.getElementById('challengeText');
-const smashEffect = document.getElementById('smashEffect');
 const greetingContainer = document.querySelector('.greeting-container');
 const sledInstruction = document.getElementById('sledInstruction');
 const clickSound = document.getElementById('clickSound');
@@ -505,15 +575,8 @@ function triggerSmash() {
     const smashX = challengeRect.left + challengeRect.width / 2;
     const smashY = challengeRect.top + challengeRect.height / 2;
 
-    // Position smash effect
-    smashEffect.style.left = smashX + 'px';
-    smashEffect.style.top = smashY + 'px';
-
-    // Trigger smash animation
-    smashEffect.classList.add('active');
-
-    // Create massive confetti burst
-    createConfettiBurst(smashX, smashY, 300);
+    // Create massive circular confetti burst
+    createConfettiBurst(smashX, smashY, 400);
 
     // Immediately stop collision detection
     challengeActive = false;
@@ -538,11 +601,6 @@ function triggerSmash() {
         challengeTextContainer.style.visibility = '';
         hasSmashed = false;
     }, 500);
-
-    // Remove smash effect class after animation
-    setTimeout(() => {
-        smashEffect.classList.remove('active');
-    }, 800);
 }
 
 function resetAnimation() {
