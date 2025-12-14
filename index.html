@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegTech - Happy Holidays</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎄</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-glow: #4ecdc4;
+            --secondary-glow: #95e1d3;
+            --accent-glow: #ffd93d;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --shadow-deep: rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Righteous', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            background: #0a0e27;
+            color: var(--text-primary);
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            contain: layout style paint;
+        }
+
+        /* Background with Northern Lights */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/RegTechNorthernLights.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            animation: auroraFlow 25s ease-in-out infinite;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @keyframes auroraFlow {
+            0%, 100% {
+                transform: scale(1) translate3d(0, 0, 0);
+                opacity: 1;
+            }
+            33% {
+                transform: scale(1.08) translate3d(-2%, 1%, 0);
+                opacity: 1.15;
+            }
+            66% {
+                transform: scale(1.05) translate3d(2%, -1%, 0);
+                opacity: 1.1;
+            }
+        }
+
+        /* Enhanced Snowfall */
+        .snow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1em;
+            font-family: Arial;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: snowfall linear infinite;
+            opacity: 0;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translate3d(0, -10vh, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate3d(20px, 110vh, 0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Modern Greeting Section */
+        .greeting-container {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 6;
+            text-align: center;
+            pointer-events: none;
+            animation: fadeInUp 1.2s ease-out;
+            width: 90%;
+            max-width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .greeting-main {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            letter-spacing: -0.02em;
+            max-width: 100%;
+            word-break: break-word;
+        }
+
+        .greeting-main span {
+            display: inline-block;
+            color: var(--text-primary);
+            text-shadow: 
+                0 0 10px rgba(78, 205, 196, 0.5),
+                0 0 20px rgba(78, 205, 196, 0.3),
+                0 0 30px rgba(78, 205, 196, 0.2),
+                0 4px 20px var(--shadow-deep);
+            animation: letterGlow 3s ease-in-out infinite;
+            animation-delay: calc(var(--delay) * 0.08s);
+        }
+
+
+        @keyframes letterGlow {
+            0%, 100% {
+                filter: brightness(1);
+                text-shadow: 
+                    0 0 10px rgba(78, 205, 196, 0.5),
+                    0 0 20px rgba(78, 205, 196, 0.3),
+                    0 0 30px rgba(78, 205, 196, 0.2),
+                    0 4px 20px var(--shadow-deep);
+            }
+            50% {
+                filter: brightness(1.3);
+                text-shadow: 
+                    0 0 15px rgba(78, 205, 196, 0.8),
+                    0 0 30px rgba(78, 205, 196, 0.5),
+                    0 0 45px rgba(78, 205, 196, 0.3),
+                    0 4px 20px var(--shadow-deep);
+            }
+        }
+
+        .greeting-sub {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(18px, 2.5vw, 32px);
+            font-weight: 300;
+            color: var(--text-secondary);
+            text-shadow: 0 2px 10px var(--shadow-deep);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+
+        /* Center Sled Container (Initially Clickable) */
+        .sled-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            z-index: 3;
+            opacity: 1;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: sledAppear 1s ease-out 0.5s both;
+            will-change: transform, left, top;
+            backface-visibility: hidden;
+        }
+
+        @keyframes sledAppear {
+            from {
+                opacity: 0;
+                transform: translate3d(-50%, -50%, 0) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(-50%, -50%, 0) scale(1);
+            }
+        }
+
+        .sled-container:hover {
+            transform: translate3d(-50%, -50%, 0) scale(1.05);
+        }
+
+        .sled-container:active {
+            transform: translate3d(-50%, -50%, 0) scale(0.98);
+        }
+
+        .sled-container.flying {
+            pointer-events: none;
+            transition: none;
+        }
+
+        .sled-image {
+            width: clamp(400px, 45vw, 650px);
+            height: auto;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+            pointer-events: none;
+            transition: filter 0.3s ease;
+        }
+
+        .sled-container:hover .sled-image {
+            filter: drop-shadow(0 25px 60px rgba(78, 205, 196, 0.4)) 
+                    drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Sled Instruction Text */
+        .sled-instruction {
+            position: relative;
+            margin-top: 20px;
+            font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-align: center;
+            text-shadow: 0 2px 10px var(--shadow-deep);
+            letter-spacing: 0.05em;
+            opacity: 0;
+            animation: instructionFadeIn 1s ease-out 1.5s forwards;
+            pointer-events: none;
+        }
+
+        .sled-instruction.hidden {
+            opacity: 0;
+            animation: none;
+        }
+
+        @keyframes instructionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Looping Flying Animation */
+        .sled-container.looping {
+            animation: sledUp 2s ease-out forwards, 
+                       sledMoveLeft 1.5s linear 2s forwards,
+                       sledLoopHorizontal 6s linear 3.5s infinite;
+            pointer-events: none;
+            transition: none !important;
+            will-change: left, transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            isolation: isolate;
+        }
+
+        @keyframes sledUp {
+            /* Start at center, move up while scaling down */
+            0% {
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                left: 50%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.6);
+            }
+        }
+
+        @keyframes sledMoveLeft {
+            /* Move from center to left, going off screen */
+            0% {
+                left: 50%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.6);
+            }
+            100% {
+                left: -15%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+            }
+        }
+
+        @keyframes sledLoopHorizontal {
+            /* Start from right edge, move left continuously in infinite loop */
+            0% {
+                left: 115%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(3deg) scale(0.6);
+            }
+            49.999% {
+                left: -15%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+            }
+            /* Seamlessly transition to appear from right (snake effect) */
+            50% {
+                left: 115%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(3deg) scale(0.6);
+            }
+            100% {
+                left: -15%;
+                top: 15%;
+                transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+            }
+        }
+
+        /* Motion Lines/Trails */
+        .motion-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .motion-lines.active {
+            opacity: 1;
+        }
+
+        .motion-line {
+            position: absolute;
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(78, 205, 196, 0.4) 10%,
+                rgba(149, 225, 211, 0.7) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(149, 225, 211, 0.7) 70%,
+                rgba(78, 205, 196, 0.4) 90%,
+                transparent 100%);
+            transform-origin: left center;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+            animation: motionLineFade 0.6s ease-out forwards;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @keyframes motionLineFade {
+            from {
+                opacity: 0.9;
+                transform: scaleX(0) scaleY(1);
+            }
+            50% {
+                opacity: 0.6;
+            }
+            to {
+                opacity: 0;
+                transform: scaleX(1.2) scaleY(0.3);
+            }
+        }
+
+        /* Present with Message Overlay */
+        .present-container {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        .present-container.show {
+            opacity: 1;
+            animation: presentReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes presentReveal {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -30%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .present {
+            width: clamp(280px, 32vw, 440px);
+            height: clamp(280px, 32vw, 440px);
+            position: relative;
+            pointer-events: none;
+        }
+
+        .present img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+        }
+
+        .present-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 7;
+            pointer-events: none;
+        }
+
+        .present-message h1 {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(28px, 4vw, 56px);
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            text-shadow: 
+                0 0 20px rgba(78, 205, 196, 0.8),
+                0 0 40px rgba(78, 205, 196, 0.5),
+                0 4px 20px var(--shadow-deep);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .present-message p {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(16px, 2vw, 24px);
+            font-weight: 300;
+            color: var(--text-secondary);
+            text-shadow: 
+                0 0 10px rgba(78, 205, 196, 0.4),
+                0 2px 10px var(--shadow-deep);
+            letter-spacing: 0.05em;
+        }
+
+        /* Click Ripple Effect */
+        .click-ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        .click-ripple.active {
+            animation: rippleExpand 0.8s ease-out forwards;
+        }
+
+        @keyframes rippleExpand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 7;
+        }
+
+
+        /* Reset Present Button */
+        .reset-present-container {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease, transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .challenge-input-container.show ~ .reset-present-container {
+            bottom: 40px;
+        }
+
+        .reset-present-container.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .reset-present-container button {
+            cursor: pointer;
+        }
+
+        .reset-button {
+            font-family: 'Righteous', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 12px 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .reset-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(78, 205, 196, 0.5);
+            color: var(--text-primary);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Particle Burst Effect */
+        .particle-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        /* Challenge Input */
+        .challenge-input-container {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            max-width: 600px;
+        }
+
+
+        .challenge-input-container.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .challenge-input-label {
+            display: block;
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(14px, 1.8vw, 18px);
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px var(--shadow-deep);
+            letter-spacing: 0.05em;
+        }
+
+        .challenge-input {
+            font-family: 'Righteous', sans-serif;
+            font-size: 16px;
+            padding: 12px 20px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            border-radius: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            min-width: 400px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-input:focus {
+            border-color: rgba(78, 205, 196, 0.8);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .challenge-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .submit-challenge-btn {
+            font-family: 'Righteous', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            border-radius: 24px;
+            background: rgba(78, 205, 196, 0.2);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .submit-challenge-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+            border-color: rgba(78, 205, 196, 0.8);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Sound Toggle Button */
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 15;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            padding: 0;
+            outline: none;
+        }
+
+        .sound-toggle:hover {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.8);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            transform: scale(1.1);
+        }
+
+        .sound-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .sound-toggle.muted .sound-icon {
+            opacity: 0.5;
+        }
+
+        .sound-icon {
+            display: block;
+            transition: opacity 0.3s ease;
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        /* Challenge Text Display */
+        .challenge-text-container {
+            position: absolute;
+            left: 10%;
+            top: 66%;
+            transform: translateY(-50%);
+            z-index: 6;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-text-container.show {
+            opacity: 1;
+            animation: moveToSanta 3s ease-out forwards;
+        }
+
+        .challenge-text-container.smashed {
+            animation: smashToPieces 0.5s ease-out forwards !important;
+            pointer-events: none;
+        }
+
+        @keyframes moveToSanta {
+            0% {
+                top: 66%;
+            }
+            100% {
+                top: 15%;
+            }
+        }
+
+        @keyframes smashToPieces {
+            0% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(1.2) rotate(5deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50%) scale(0) rotate(180deg);
+            }
+        }
+
+        .challenge-text {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(32px, 4vw, 64px);
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 
+                0 0 20px rgba(78, 205, 196, 0.8),
+                0 0 40px rgba(78, 205, 196, 0.5),
+                0 4px 20px var(--shadow-deep);
+            line-height: 1.2;
+            text-align: center;
+            max-width: 400px;
+            word-wrap: break-word;
+        }
+
+        /* Smash Effect */
+        .smash-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 8;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(255, 107, 107, 0.8) 0%,
+                rgba(255, 217, 61, 0.6) 30%,
+                rgba(78, 205, 196, 0.4) 60%,
+                transparent 100%);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .smash-effect.active {
+            animation: smashExplosion 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes smashExplosion {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            50% {
+                width: 600px;
+                height: 600px;
+                opacity: 0.9;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                width: 1000px;
+                height: 1000px;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2);
+            }
+        }
+
+        /* Smash Counter */
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .greeting-container {
+                bottom: 120px;
+                z-index: 6;
+            }
+
+            .greeting-main {
+                font-size: clamp(36px, 6vw, 80px);
+                gap: 4px;
+            }
+
+            .greeting-main span.mobile-line-break {
+                display: block;
+                width: 100%;
+                height: 0;
+                line-height: 0;
+            }
+
+            .sled-container {
+                z-index: 3;
+            }
+
+            .sled-image {
+                width: clamp(250px, 40vw, 450px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .greeting-container {
+                bottom: 80px;
+                width: 95%;
+                padding: 0 15px;
+            }
+
+            .greeting-main {
+                font-size: clamp(40px, 8vw, 64px);
+                gap: 4px;
+                line-height: 1.2;
+            }
+
+            .greeting-main span.mobile-line-break {
+                display: block;
+                width: 100%;
+                height: 0;
+                line-height: 0;
+            }
+
+            .greeting-sub {
+                font-size: clamp(14px, 3vw, 24px);
+            }
+
+            .sled-container {
+                z-index: 3;
+            }
+
+            .sled-image {
+                width: clamp(250px, 45vw, 400px);
+            }
+
+            .present {
+                width: clamp(200px, 40vw, 320px);
+                height: clamp(200px, 40vw, 320px);
+            }
+
+            .challenge-input-wrapper {
+                width: 100%;
+            }
+
+            .challenge-input {
+                min-width: 280px;
+                width: 100%;
+            }
+
+            .challenge-input {
+                font-size: 14px;
+            }
+
+            .challenge-text {
+                font-size: clamp(20px, 5vw, 40px);
+            }
+
+            .challenge-text-container {
+                left: 5%;
+                top: 66%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .greeting-container {
+                bottom: 60px;
+                width: 98%;
+                padding: 0 10px;
+            }
+
+            .greeting-main {
+                font-size: clamp(36px, 9vw, 48px);
+                gap: 2px;
+                line-height: 1.3;
+            }
+
+            .greeting-main span.mobile-line-break {
+                display: block;
+                width: 100%;
+                height: 0;
+                line-height: 0;
+            }
+
+            .greeting-sub {
+                font-size: clamp(12px, 3.5vw, 18px);
+            }
+
+            .sled-container {
+                z-index: 3;
+            }
+
+            .sled-image {
+                width: clamp(200px, 50vw, 300px);
+            }
+
+            .present {
+                width: clamp(180px, 45vw, 250px);
+                height: clamp(180px, 45vw, 250px);
+            }
+
+            .sled-instruction {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background with Northern Lights -->
+        <div class="background"></div>
+
+        <!-- Snowfall -->
+        <div class="snow-container" id="snow-container"></div>
+
+        <!-- Greeting Text -->
+        <div class="greeting-container">
+            <div class="greeting-main" id="greetingMain"></div>
+            <div class="greeting-sub">From RegTech</div>
+            <div class="sled-instruction" id="sledInstruction">Tap or Press Enter</div>
+        </div>
+
+        <!-- Center Sled (Clickable) -->
+        <div class="sled-container" id="sledContainer">
+            <img src="images/RegTechChristmas.png" alt="RegTech Christmas Sleigh" class="sled-image">
+        </div>
+
+        <!-- Motion Lines Container -->
+        <div class="motion-lines" id="motionLines"></div>
+
+        <!-- Present with Message -->
+        <div class="present-container" id="presentContainer">
+            <div class="present">
+                <img src="images/RegTechPresent.png" alt="RegTech Present">
+                <div class="present-message">
+                    <h1>RegTech to the Moon</h1>
+                    <p>Here's to unwrapping the wins 2026 will bring!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Click Ripple Effect -->
+        <div class="click-ripple" id="clickRipple"></div>
+
+        <!-- Confetti Canvas -->
+        <canvas id="confetti-canvas"></canvas>
+
+        <!-- Reset Button -->
+        <div class="reset-present-container" id="resetPresentContainer">
+            <button id="submitChallenge" class="submit-challenge-btn">SMASH</button>
+            <button class="reset-button">Reset</button>
+        </div>
+
+        <!-- Challenge Input -->
+        <div class="challenge-input-container" id="challengeInputContainer">
+            <div class="challenge-input-wrapper">
+                <label for="challengeInput" class="challenge-input-label">Type something we'll smash in 2026</label>
+                <input type="text" 
+                       id="challengeInput" 
+                       class="challenge-input">
+            </div>
+        </div>
+
+        <!-- Challenge Text Display -->
+        <div class="challenge-text-container" id="challengeTextContainer">
+            <div class="challenge-text" id="challengeText"></div>
+        </div>
+
+        <!-- Smash Effect -->
+        <div class="smash-effect" id="smashEffect"></div>
+
+        <!-- Audio Element -->
+        <audio id="clickSound" preload="auto" volume="0.8">
+            <source src="audio/click-sound.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Sound Toggle Button -->
+        <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+            <span class="sound-icon">🔊</span>
+        </button>
+
+        <!-- Smash Counter -->
+    </div>
+
+    <script>
+        // Initialize greeting text with individual letters
+        const greetingMain = document.getElementById('greetingMain');
+        const text = 'Happy Holidays';
+        
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.setProperty('--delay', index);
+            // Add class to the space between "Happy" and "Holidays" for mobile line break
+            if (char === ' ' && index === 5) {
+                span.classList.add('mobile-line-break');
+            }
+            greetingMain.appendChild(span);
+        });
+
+        // Enhanced Snowfall Animation
+        let snowflakeCount = 0;
+        const MAX_SNOWFLAKES = 70;
+
+        function createSnowflake() {
+            // Limit snowflake count for performance
+            if (snowflakeCount >= MAX_SNOWFLAKES) {
+                return;
+            }
+
+            const snowContainer = document.getElementById('snow-container');
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            
+            const startX = Math.random() * 100;
+            const drift = (Math.random() - 0.5) * 30;
+            const duration = Math.random() * 4 + 3;
+            const size = Math.random() * 8 + 12;
+            const delay = Math.random() * 2;
+            
+            snowflake.style.left = startX + '%';
+            snowflake.style.animationDuration = duration + 's';
+            snowflake.style.animationDelay = delay + 's';
+            snowflake.style.fontSize = size + 'px';
+            snowflake.style.opacity = Math.random() * 0.4 + 0.6;
+            
+            // Add horizontal drift
+            snowflake.style.setProperty('--drift', drift + 'px');
+            
+            snowContainer.appendChild(snowflake);
+            snowflakeCount++;
+
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.remove();
+                    snowflakeCount--;
+                }
+            }, (duration + delay) * 1000);
+        }
+
+        // Create initial snowflakes
+        for (let i = 0; i < 45; i++) {
+            setTimeout(() => createSnowflake(), i * 300);
+        }
+
+        // Continue creating snowflakes
+        setInterval(createSnowflake, 450);
+
+        // Enhanced Confetti System
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        const confettiParticles = [];
+
+        class ConfettiParticle {
+            constructor(x, y, type = 'square') {
+                this.x = x;
+                this.y = y;
+                this.type = type;
+                this.vx = (Math.random() - 0.5) * 12;
+                this.vy = (Math.random() - 0.5) * 12 - 8;
+                this.size = Math.random() * 10 + 5;
+                this.color = ['#ff6b6b', '#ffd93d', '#4ecdc4', '#95e1d3', '#f38181', '#aa96da', '#ffffff'][
+                    Math.floor(Math.random() * 7)
+                ];
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 25;
+                this.gravity = 0.4;
+                this.life = 1;
+                this.decay = Math.random() * 0.02 + 0.015;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += this.gravity;
+                this.rotation += this.rotationSpeed;
+                this.life -= this.decay;
+                this.vx *= 0.98; // Air resistance
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                
+                if (this.type === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                }
+                
+                ctx.restore();
+            }
+        }
+
+        function createConfettiBurst(x, y, count = 150) {
+            for (let i = 0; i < count; i++) {
+                const type = Math.random() > 0.7 ? 'circle' : 'square';
+                confettiParticles.push(new ConfettiParticle(x, y, type));
+            }
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = confettiParticles.length - 1; i >= 0; i--) {
+                const particle = confettiParticles[i];
+                particle.update();
+                particle.draw();
+
+                if (particle.life <= 0 || particle.y > canvas.height + 100 || particle.x < -100 || particle.x > canvas.width + 100) {
+                    confettiParticles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateConfetti);
+        }
+
+        animateConfetti();
+
+        // Particle Burst on Click
+        function createParticleBurst(x, y) {
+            const colors = ['#4ecdc4', '#95e1d3', '#ffd93d', '#ffffff'];
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle-burst';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const velocity = 100 + Math.random() * 50;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--vx', vx + 'px');
+                particle.style.setProperty('--vy', vy + 'px');
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${vx}px, ${vy}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 800,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }).onfinish = () => particle.remove();
+            }
+        }
+
+        // Animation Handler
+        const sledContainer = document.getElementById('sledContainer');
+        const presentContainer = document.getElementById('presentContainer');
+        const resetPresentContainer = document.getElementById('resetPresentContainer');
+        const clickRipple = document.getElementById('clickRipple');
+        const motionLines = document.getElementById('motionLines');
+        const challengeInputContainer = document.getElementById('challengeInputContainer');
+        const challengeInput = document.getElementById('challengeInput');
+        const submitChallenge = document.getElementById('submitChallenge');
+        const challengeTextContainer = document.getElementById('challengeTextContainer');
+        const challengeText = document.getElementById('challengeText');
+        const smashEffect = document.getElementById('smashEffect');
+        const greetingContainer = document.querySelector('.greeting-container');
+        const sledInstruction = document.getElementById('sledInstruction');
+        const clickSound = document.getElementById('clickSound');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundIcon = soundToggle.querySelector('.sound-icon');
+
+        let hasStarted = false;
+        let isMuted = false;
+        let soundWasPlaying = false;
+        let motionLineAnimationFrame = null;
+        let lastSledPosition = { x: 0, y: 0 };
+        let challengeActive = false;
+        let collisionCheckAnimationFrame = null;
+        let hasSmashed = false;
+        let lastMotionLineTime = 0;
+        const MOTION_LINE_INTERVAL = 150; // ms between motion line creation
+        let motionLineCount = 0;
+        const MAX_MOTION_LINES = 15;
+
+        // Create motion lines behind the sled
+        function createMotionLine(x, y, angle, length = 150) {
+            // Limit motion line count for performance
+            if (motionLineCount >= MAX_MOTION_LINES) {
+                // Remove oldest line
+                const firstLine = motionLines.querySelector('.motion-line');
+                if (firstLine) {
+                    firstLine.remove();
+                    motionLineCount--;
+                }
+            }
+
+            const line = document.createElement('div');
+            line.className = 'motion-line';
+            line.style.left = x + 'px';
+            line.style.top = y + 'px';
+            line.style.width = length + 'px';
+            line.style.transform = `rotate(${angle}deg) translateZ(0)`;
+            line.style.willChange = 'transform, opacity';
+            motionLines.appendChild(line);
+            motionLineCount++;
+
+            setTimeout(() => {
+                if (line.parentNode) {
+                    line.remove();
+                    motionLineCount--;
+                }
+            }, 600);
+        }
+
+        function startMotionLines() {
+            motionLines.classList.add('active');
+            
+            // Get initial position
+            const initialRect = sledContainer.getBoundingClientRect();
+            lastSledPosition = {
+                x: initialRect.left + initialRect.width / 2,
+                y: initialRect.top + initialRect.height / 2
+            };
+            
+            lastMotionLineTime = performance.now();
+            
+            // Use requestAnimationFrame for better performance
+            function animateMotionLines(timestamp) {
+                if (!hasStarted) {
+                    motionLineAnimationFrame = null;
+                    return;
+                }
+                
+                // Throttle motion line creation
+                if (timestamp - lastMotionLineTime >= MOTION_LINE_INTERVAL) {
+                    const sledRect = sledContainer.getBoundingClientRect();
+                    const sledX = sledRect.left + sledRect.width / 2;
+                    const sledY = sledRect.top + sledRect.height / 2;
+                    
+                    // Calculate movement direction
+                    const dx = sledX - lastSledPosition.x;
+                    const dy = sledY - lastSledPosition.y;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    
+                    // Create motion lines trailing behind the sled (reduced from 2 to 1)
+                    const offset = 20;
+                    const offsetX = Math.cos((angle - 180) * Math.PI / 180) * offset;
+                    const offsetY = Math.sin((angle - 180) * Math.PI / 180) * offset;
+                    const lineLength = 120 + Math.random() * 40;
+                    createMotionLine(sledX + offsetX, sledY + offsetY, angle, lineLength);
+                    
+                    lastSledPosition = { x: sledX, y: sledY };
+                    lastMotionLineTime = timestamp;
+                }
+                
+                motionLineAnimationFrame = requestAnimationFrame(animateMotionLines);
+            }
+            
+            motionLineAnimationFrame = requestAnimationFrame(animateMotionLines);
+        }
+
+        function stopMotionLines() {
+            motionLines.classList.remove('active');
+            if (motionLineAnimationFrame) {
+                cancelAnimationFrame(motionLineAnimationFrame);
+                motionLineAnimationFrame = null;
+            }
+        }
+
+        // Sound Toggle Handler
+        soundToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            
+            if (isMuted) {
+                soundIcon.textContent = '🔇';
+                soundToggle.classList.add('muted');
+                if (clickSound) {
+                    // Track if sound was playing before muting
+                    soundWasPlaying = !clickSound.paused;
+                    clickSound.pause();
+                }
+            } else {
+                soundIcon.textContent = '🔊';
+                soundToggle.classList.remove('muted');
+                // Resume playing if animation has started and sound was playing
+                if (clickSound && hasStarted && soundWasPlaying) {
+                    clickSound.volume = 0.8;
+                    clickSound.play().catch(err => {
+                        console.log('Audio play failed:', err);
+                    });
+                }
+            }
+        });
+
+        function startAnimation() {
+            if (hasStarted) return;
+            hasStarted = true;
+
+            // Play click sound (only if not muted)
+            if (clickSound && !isMuted) {
+                clickSound.volume = 0.8; // Set volume (0.0 to 1.0)
+                clickSound.currentTime = 0; // Reset to start
+                clickSound.play().then(() => {
+                    soundWasPlaying = true;
+                }).catch(err => {
+                    // Handle autoplay restrictions - user interaction is required
+                    console.log('Audio play failed:', err);
+                    soundWasPlaying = false;
+                });
+            } else {
+                soundWasPlaying = false;
+            }
+
+            // Hide instruction text
+            sledInstruction.classList.add('hidden');
+
+            // Make sled non-clickable and start smooth transition to looping
+            sledContainer.classList.add('flying');
+            sledContainer.style.pointerEvents = 'none';
+            
+            // Start looping animation smoothly - slight delay for smooth transition
+            setTimeout(() => {
+                sledContainer.classList.add('looping');
+                startMotionLines();
+            }, 100);
+
+            // Show present with message smoothly
+            setTimeout(() => {
+                presentContainer.classList.add('show');
+                setTimeout(() => {
+                    resetPresentContainer.classList.add('show');
+                    // Hide greeting and show challenge input after present appears
+                    greetingContainer.style.opacity = '0';
+                    greetingContainer.style.pointerEvents = 'none';
+                    challengeInputContainer.classList.add('show');
+                }, 1000);
+            }, 600);
+        }
+
+        // Challenge Submission
+        function submitChallengeHandler() {
+            const text = challengeInput.value.trim();
+            if (!text) return;
+
+            // Reset position to spawn point and remove any smash state
+            challengeTextContainer.style.top = '66%';
+            challengeTextContainer.style.animation = '';
+            challengeTextContainer.style.opacity = '';
+            challengeTextContainer.style.visibility = '';
+            challengeTextContainer.style.pointerEvents = '';
+            challengeTextContainer.classList.remove('show', 'smashed');
+            
+            // Truncate text if longer than 40 characters
+            const displayText = text.length > 40 ? text.substring(0, 40) + '...' : text;
+            challengeText.textContent = displayText;
+            // Force reflow to reset animation
+            void challengeTextContainer.offsetWidth;
+            challengeTextContainer.classList.add('show');
+            // Clear input for next word but keep it visible
+            challengeInput.value = '';
+            challengeActive = true;
+            hasSmashed = false;
+
+            // Start collision detection
+            startCollisionDetection();
+        }
+
+        submitChallenge.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent event from bubbling to container
+            submitChallengeHandler();
+        });
+        challengeInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                submitChallengeHandler();
+            }
+        });
+
+        // Collision Detection (optimized with requestAnimationFrame)
+        function startCollisionDetection() {
+            if (collisionCheckAnimationFrame) {
+                cancelAnimationFrame(collisionCheckAnimationFrame);
+            }
+
+            let cachedSledRect = null;
+            let cachedChallengeRect = null;
+            let lastCheckTime = 0;
+            const CHECK_INTERVAL = 16; // ~60fps
+
+            function checkCollision(timestamp) {
+                if (!challengeActive || hasSmashed || !hasStarted) {
+                    collisionCheckAnimationFrame = null;
+                    return;
+                }
+
+                // Throttle checks to ~60fps
+                if (timestamp - lastCheckTime >= CHECK_INTERVAL) {
+                    // Cache rects to avoid multiple getBoundingClientRect calls
+                    cachedSledRect = sledContainer.getBoundingClientRect();
+                    cachedChallengeRect = challengeTextContainer.getBoundingClientRect();
+
+                    // Check if sled overlaps with challenge text
+                    const sledLeft = cachedSledRect.left;
+                    const sledRight = cachedSledRect.right;
+                    const sledTop = cachedSledRect.top;
+                    const sledBottom = cachedSledRect.bottom;
+
+                    const challengeLeft = cachedChallengeRect.left;
+                    const challengeRight = cachedChallengeRect.right;
+                    const challengeTop = cachedChallengeRect.top;
+                    const challengeBottom = cachedChallengeRect.bottom;
+
+                    // Collision detection
+                    if (sledLeft < challengeRight && 
+                        sledRight > challengeLeft && 
+                        sledTop < challengeBottom && 
+                        sledBottom > challengeTop) {
+                        triggerSmash();
+                        collisionCheckAnimationFrame = null;
+                        return;
+                    }
+                    
+                    lastCheckTime = timestamp;
+                }
+
+                collisionCheckAnimationFrame = requestAnimationFrame(checkCollision);
+            }
+
+            collisionCheckAnimationFrame = requestAnimationFrame(checkCollision);
+        }
+
+        // Generate celebratory sound using Web Audio API
+        function playCelebratorySound() {
+            if (isMuted) return;
+            
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const duration = 0.3;
+                const sampleRate = audioContext.sampleRate;
+                const numSamples = duration * sampleRate;
+                const buffer = audioContext.createBuffer(1, numSamples, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                // Create a celebratory "success" sound with multiple tones
+                for (let i = 0; i < numSamples; i++) {
+                    const t = i / sampleRate;
+                    // Create a rising chord pattern (major triad)
+                    const freq1 = 523.25; // C5
+                    const freq2 = 659.25; // E5
+                    const freq3 = 783.99; // G5
+                    
+                    // Add a rising pitch effect
+                    const risingFreq = 400 + (t * 200);
+                    
+                    // Combine frequencies with envelope
+                    const envelope = Math.exp(-t * 3); // Exponential decay
+                    const wave1 = Math.sin(2 * Math.PI * freq1 * t) * envelope * 0.3;
+                    const wave2 = Math.sin(2 * Math.PI * freq2 * t) * envelope * 0.3;
+                    const wave3 = Math.sin(2 * Math.PI * freq3 * t) * envelope * 0.2;
+                    const wave4 = Math.sin(2 * Math.PI * risingFreq * t) * envelope * 0.2;
+                    
+                    data[i] = wave1 + wave2 + wave3 + wave4;
+                }
+
+                const source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioContext.destination);
+                source.start(0);
+            } catch (err) {
+                console.log('Celebratory sound generation failed:', err);
+            }
+        }
+
+        function triggerSmash() {
+            if (hasSmashed) return;
+            hasSmashed = true;
+
+            // Play celebratory smash sound (only if not muted)
+            playCelebratorySound();
+
+            // Get collision position
+            const challengeRect = challengeTextContainer.getBoundingClientRect();
+            const smashX = challengeRect.left + challengeRect.width / 2;
+            const smashY = challengeRect.top + challengeRect.height / 2;
+
+            // Position smash effect
+            smashEffect.style.left = smashX + 'px';
+            smashEffect.style.top = smashY + 'px';
+
+            // Trigger smash animation
+            smashEffect.classList.add('active');
+
+            // Create massive confetti burst
+            createConfettiBurst(smashX, smashY, 300);
+
+            // Immediately stop collision detection
+            challengeActive = false;
+            if (collisionCheckAnimationFrame) {
+                cancelAnimationFrame(collisionCheckAnimationFrame);
+                collisionCheckAnimationFrame = null;
+            }
+            
+            // Immediately hide the text completely - stop all animations and make invisible
+            challengeTextContainer.classList.remove('show');
+            challengeTextContainer.style.animation = 'none';
+            challengeTextContainer.style.opacity = '0';
+            challengeTextContainer.style.visibility = 'hidden';
+            challengeTextContainer.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                // Reset position to spawn point (while hidden)
+                challengeTextContainer.classList.remove('smashed');
+                challengeTextContainer.style.top = '66%';
+                challengeTextContainer.style.visibility = '';
+                hasSmashed = false;
+            }, 500);
+
+            // Remove smash effect class after animation
+            setTimeout(() => {
+                smashEffect.classList.remove('active');
+            }, 800);
+        }
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateY(-50%) scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-50%) scale(0.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function resetAnimation() {
+            hasStarted = false;
+            stopMotionLines();
+            
+            // Stop sound
+            if (clickSound) {
+                clickSound.pause();
+                clickSound.currentTime = 0;
+                soundWasPlaying = false;
+            }
+            
+            // Reset sled container - stop looping and return to center
+            sledContainer.classList.remove('looping', 'flying');
+            sledContainer.style.pointerEvents = 'auto';
+            sledContainer.style.left = '50%';
+            sledContainer.style.top = '50%';
+            
+            // Hide present
+            presentContainer.classList.remove('show');
+            
+            // Hide reset button
+            resetPresentContainer.classList.remove('show');
+            
+            // Reset challenge state
+            challengeActive = false;
+            hasSmashed = false;
+            challengeInput.value = '';
+            challengeInputContainer.classList.remove('show');
+            challengeTextContainer.classList.remove('show', 'smashed');
+            challengeTextContainer.style.animation = '';
+            challengeTextContainer.style.opacity = '';
+            challengeTextContainer.style.visibility = '';
+            challengeTextContainer.style.pointerEvents = '';
+            challengeTextContainer.style.top = '66%'; // Reset to initial spawn position
+            if (collisionCheckAnimationFrame) {
+                cancelAnimationFrame(collisionCheckAnimationFrame);
+                collisionCheckAnimationFrame = null;
+            }
+            
+            // Show greeting again
+            greetingContainer.style.opacity = '1';
+            greetingContainer.style.pointerEvents = 'auto';
+            
+            // Show instruction text again
+            sledInstruction.classList.remove('hidden');
+            
+            // Clear motion lines
+            motionLines.innerHTML = '';
+            
+            // Force reflow to restart animations
+            void sledContainer.offsetWidth;
+            void presentContainer.offsetWidth;
+        }
+
+        sledContainer.addEventListener('click', startAnimation);
+        const resetButton = resetPresentContainer.querySelector('.reset-button');
+        resetButton.addEventListener('click', resetAnimation);
+
+        // Allow Enter key to start animation from initial screen
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !hasStarted) {
+                e.preventDefault();
+                startAnimation();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+    </script>
+</body>
+</html>
+
+
