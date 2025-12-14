@@ -175,6 +175,27 @@ const MOTION_LINE_INTERVAL = 150; // ms between motion line creation
 let motionLineCount = 0;
 const MAX_MOTION_LINES = 15;
 
+// AudioContext for mobile compatibility - create once and reuse
+let audioContext = null;
+
+// Initialize AudioContext on first user interaction
+function initAudioContext() {
+    if (!audioContext) {
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (err) {
+            console.log('AudioContext creation failed:', err);
+        }
+    }
+    // Resume if suspended (required for mobile browsers)
+    if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume().catch(err => {
+            console.log('AudioContext resume failed:', err);
+        });
+    }
+    return audioContext;
+}
+
 // Create motion lines behind the sled
 function createMotionLine(x, y, angle, length = 150) {
     // Limit motion line count for performance
@@ -288,6 +309,9 @@ soundToggle.addEventListener('click', () => {
 function startAnimation() {
     if (hasStarted) return;
     hasStarted = true;
+
+    // Initialize AudioContext on user interaction (required for mobile)
+    initAudioContext();
 
     // Play click sound (only if not muted)
     if (clickSound && !isMuted) {
@@ -426,12 +450,15 @@ function startCollisionDetection() {
 function playCelebratorySound() {
     if (isMuted) return;
     
+    // Initialize/resume AudioContext (required for mobile)
+    const ctx = initAudioContext();
+    if (!ctx) return;
+    
     try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const duration = 0.3;
-        const sampleRate = audioContext.sampleRate;
+        const sampleRate = ctx.sampleRate;
         const numSamples = duration * sampleRate;
-        const buffer = audioContext.createBuffer(1, numSamples, sampleRate);
+        const buffer = ctx.createBuffer(1, numSamples, sampleRate);
         const data = buffer.getChannelData(0);
 
         // Create a celebratory "success" sound with multiple tones
@@ -455,9 +482,9 @@ function playCelebratorySound() {
             data[i] = wave1 + wave2 + wave3 + wave4;
         }
 
-        const source = audioContext.createBufferSource();
+        const source = ctx.createBufferSource();
         source.buffer = buffer;
-        source.connect(audioContext.destination);
+        source.connect(ctx.destination);
         source.start(0);
     } catch (err) {
         console.log('Celebratory sound generation failed:', err);
@@ -567,6 +594,18 @@ function resetAnimation() {
     void sledContainer.offsetWidth;
     void presentContainer.offsetWidth;
 }
+
+// Initialize AudioContext on any user interaction (for mobile compatibility)
+function initAudioOnInteraction() {
+    initAudioContext();
+    // Remove listeners after first interaction
+    document.removeEventListener('touchstart', initAudioOnInteraction);
+    document.removeEventListener('click', initAudioOnInteraction);
+}
+
+// Set up early audio initialization for mobile
+document.addEventListener('touchstart', initAudioOnInteraction, { once: true });
+document.addEventListener('click', initAudioOnInteraction, { once: true });
 
 sledContainer.addEventListener('click', startAnimation);
 const resetButton = resetPresentContainer.querySelector('.reset-button');
