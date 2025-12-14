@@ -557,6 +557,8 @@ function resetAnimation() {
     sledContainer.style.pointerEvents = 'auto';
     sledContainer.style.left = '50%';
     sledContainer.style.top = '50%';
+    // Reset transform to center position (for Safari compatibility)
+    sledContainer.style.transform = 'translate3d(-50%, -50%, 0)';
     
     // Hide present
     presentContainer.classList.remove('show');

@@ -231,19 +231,26 @@ body {
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     animation: sledAppear 1s ease-out 0.5s both;
-    will-change: transform, left, top;
+    will-change: transform;
     backface-visibility: hidden;
     background: transparent;
+    /* Force GPU acceleration for Safari */
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 @keyframes sledAppear {
     from {
         opacity: 0;
         transform: translate3d(-50%, -50%, 0) scale(0.8);
+        -webkit-transform: translate3d(-50%, -50%, 0) scale(0.8);
     }
     to {
         opacity: 1;
         transform: translate3d(-50%, -50%, 0) scale(1);
+        -webkit-transform: translate3d(-50%, -50%, 0) scale(1);
     }
 }
 
@@ -317,62 +324,59 @@ body {
                sledLoopHorizontal 6s linear 3.5s infinite;
     pointer-events: none;
     transition: none !important;
-    will-change: left, transform;
+    will-change: transform;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
     isolation: isolate;
+    /* Force GPU acceleration for Safari */
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 @keyframes sledUp {
-    /* Start at center, move up while scaling down */
+    /* Start at center, move up while scaling down - using transform only */
     0% {
-        left: 50%;
-        top: 50%;
         transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
+        -webkit-transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
     }
     100% {
-        left: 50%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.6);
+        transform: translate3d(-50%, calc(-50% - 35vh), 0) rotate(0deg) scale(0.6);
+        -webkit-transform: translate3d(-50%, calc(-50% - 35vh), 0) rotate(0deg) scale(0.6);
     }
 }
 
 @keyframes sledMoveLeft {
-    /* Move from center to left, going off screen */
+    /* Move from center to left, going off screen - using transform only */
     0% {
-        left: 50%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.6);
+        transform: translate3d(-50%, calc(-50% - 35vh), 0) rotate(0deg) scale(0.6);
+        -webkit-transform: translate3d(-50%, calc(-50% - 35vh), 0) rotate(0deg) scale(0.6);
     }
     100% {
-        left: -15%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+        transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
+        -webkit-transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
     }
 }
 
 @keyframes sledLoopHorizontal {
-    /* Start from right edge, move left continuously in infinite loop */
+    /* Start from right edge, move left continuously in infinite loop - using transform only */
     0% {
-        left: 115%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(3deg) scale(0.6);
+        transform: translate3d(calc(-50% + 65vw), calc(-50% - 35vh), 0) rotate(3deg) scale(0.6);
+        -webkit-transform: translate3d(calc(-50% + 65vw), calc(-50% - 35vh), 0) rotate(3deg) scale(0.6);
     }
     49.999% {
-        left: -15%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+        transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
+        -webkit-transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
     }
     /* Seamlessly transition to appear from right (snake effect) */
     50% {
-        left: 115%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(3deg) scale(0.6);
+        transform: translate3d(calc(-50% + 65vw), calc(-50% - 35vh), 0) rotate(3deg) scale(0.6);
+        -webkit-transform: translate3d(calc(-50% + 65vw), calc(-50% - 35vh), 0) rotate(3deg) scale(0.6);
     }
     100% {
-        left: -15%;
-        top: 15%;
-        transform: translate3d(-50%, -50%, 0) rotate(-3deg) scale(0.6);
+        transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
+        -webkit-transform: translate3d(calc(-50% - 65vw), calc(-50% - 35vh), 0) rotate(-3deg) scale(0.6);
     }
 }
 
