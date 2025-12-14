@@ -361,6 +361,8 @@ function submitChallengeHandler() {
 
     // Reset position to spawn point and remove any smash state
     challengeTextContainer.style.top = '66%';
+    challengeTextContainer.style.transform = 'translateY(-50%)';
+    challengeTextContainer.style.webkitTransform = 'translateY(-50%)';
     challengeTextContainer.style.animation = '';
     challengeTextContainer.style.opacity = '';
     challengeTextContainer.style.visibility = '';
@@ -531,6 +533,8 @@ function triggerSmash() {
         // Reset position to spawn point (while hidden)
         challengeTextContainer.classList.remove('smashed');
         challengeTextContainer.style.top = '66%';
+        challengeTextContainer.style.transform = 'translateY(-50%)';
+        challengeTextContainer.style.webkitTransform = 'translateY(-50%)';
         challengeTextContainer.style.visibility = '';
         hasSmashed = false;
     }, 500);
@@ -577,6 +581,8 @@ function resetAnimation() {
     challengeTextContainer.style.visibility = '';
     challengeTextContainer.style.pointerEvents = '';
     challengeTextContainer.style.top = '66%'; // Reset to initial spawn position
+    challengeTextContainer.style.transform = 'translateY(-50%)';
+    challengeTextContainer.style.webkitTransform = 'translateY(-50%)';
     if (collisionCheckAnimationFrame) {
         cancelAnimationFrame(collisionCheckAnimationFrame);
         collisionCheckAnimationFrame = null;

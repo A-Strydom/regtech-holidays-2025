@@ -749,6 +749,13 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    /* Force GPU acceleration for Safari */
+    -webkit-transform: translateY(-50%);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 .challenge-text-container.show {
@@ -763,10 +770,12 @@ body {
 
 @keyframes moveToSanta {
     0% {
-        top: 66%;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
     }
     100% {
-        top: 15%;
+        transform: translateY(calc(-50% - 51vh));
+        -webkit-transform: translateY(calc(-50% - 51vh));
     }
 }
 
@@ -774,14 +783,17 @@ body {
     0% {
         opacity: 1;
         transform: translateY(-50%) scale(1) rotate(0deg);
+        -webkit-transform: translateY(-50%) scale(1) rotate(0deg);
     }
     50% {
         opacity: 0.5;
         transform: translateY(-50%) scale(1.2) rotate(5deg);
+        -webkit-transform: translateY(-50%) scale(1.2) rotate(5deg);
     }
     100% {
         opacity: 0;
         transform: translateY(-50%) scale(0) rotate(180deg);
+        -webkit-transform: translateY(-50%) scale(0) rotate(180deg);
     }
 }
 
@@ -807,8 +819,8 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 8;
-    width: 0;
-    height: 0;
+    width: 1000px;
+    height: 1000px;
     border-radius: 50%;
     background: radial-gradient(circle, 
         rgba(255, 107, 107, 0.8) 0%,
@@ -817,6 +829,13 @@ body {
         transparent 100%);
     pointer-events: none;
     opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    /* Force GPU acceleration for Safari */
+    -webkit-transform: translate(-50%, -50%);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 .smash-effect.active {
@@ -825,22 +844,19 @@ body {
 
 @keyframes smashExplosion {
     0% {
-        width: 0;
-        height: 0;
         opacity: 1;
         transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
     }
     50% {
-        width: 600px;
-        height: 600px;
         opacity: 0.9;
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, -50%) scale(0.6);
+        -webkit-transform: translate(-50%, -50%) scale(0.6);
     }
     100% {
-        width: 1000px;
-        height: 1000px;
         opacity: 0;
         transform: translate(-50%, -50%) scale(2);
+        -webkit-transform: translate(-50%, -50%) scale(2);
     }
 }
 
