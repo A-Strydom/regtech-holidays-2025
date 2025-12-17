@@ -15,7 +15,7 @@ text.split('').forEach((char, index) => {
 
 // Enhanced Snowfall Animation
 let snowflakeCount = 0;
-const MAX_SNOWFLAKES = 70;
+const MAX_SNOWFLAKES = 180;
 
 function createSnowflake() {
     // Limit snowflake count for performance
@@ -29,16 +29,17 @@ function createSnowflake() {
     snowflake.innerHTML = '❄';
     
     const startX = Math.random() * 100;
-    const drift = (Math.random() - 0.5) * 30;
+    const drift = (Math.random() - 0.5) * 40;
     const duration = Math.random() * 4 + 3;
     const size = Math.random() * 8 + 12;
     const delay = Math.random() * 2;
     
     snowflake.style.left = startX + '%';
+    snowflake.style.top = '-20px';
     snowflake.style.animationDuration = duration + 's';
     snowflake.style.animationDelay = delay + 's';
     snowflake.style.fontSize = size + 'px';
-    snowflake.style.opacity = Math.random() * 0.4 + 0.6;
+    snowflake.style.opacity = '0';
     
     // Add horizontal drift
     snowflake.style.setProperty('--drift', drift + 'px');
@@ -55,12 +56,12 @@ function createSnowflake() {
 }
 
 // Create initial snowflakes
-for (let i = 0; i < 45; i++) {
-    setTimeout(() => createSnowflake(), i * 300);
+for (let i = 0; i < 100; i++) {
+    setTimeout(() => createSnowflake(), i * 150);
 }
 
 // Continue creating snowflakes
-setInterval(createSnowflake, 450);
+setInterval(createSnowflake, 200);
 
 // Enhanced Confetti System
 const canvas = document.getElementById('confetti-canvas');
